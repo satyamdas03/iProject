@@ -64,14 +64,14 @@ class TaskOrganizerApp(tk.Tk):
         self.organize_button = Button(self, text="Organize", command=self.organize_tasks)
         self.organize_button.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
 
-        self.tasks_label = Label(self, text="Tasks of the Day")
+        self.tasks_label = Label(self, text="Tasks of the Day", font=("Arial", 12, "bold"))
         self.tasks_label.grid(row=2, column=0, padx=10, pady=(10, 0), sticky="n")
 
         self.task_list = Text(self, width=40, height=8)
         self.task_list.grid(row=3, column=0, padx=10, pady=10, sticky="nsew")
 
         # Documentation and Save Button
-        self.doc_label = Label(self, text="Document your day @10 pm to 10:30pm")
+        self.doc_label = Label(self, text="Document your day @10 pm to 10:30pm", font=("Arial", 12, "bold"))
         self.doc_label.grid(row=4, column=0, padx=10, pady=(10, 0), sticky="s")
 
         self.doc_input = Text(self, width=40, height=6)
