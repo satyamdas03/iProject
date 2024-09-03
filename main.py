@@ -55,16 +55,16 @@ class TaskOrganizerApp(tk.Tk):
         self.geometry("700x600")  # Increased width to accommodate sidebar
 
         # Create the sidebar frame
-        sidebar = Frame(self, width=100, bg='grey')
-        sidebar.pack(side='left', fill='y')
+        sidebar = Frame(self, width=80, bg='grey')
+        sidebar.pack(side='right', fill='y')
 
         # Load icons with Pillow and resize them
         self.music_icon = Image.open('music_icon.png')
-        self.music_icon = self.music_icon.resize((50, 50), Image.LANCZOS)  # Resize icon
+        self.music_icon = self.music_icon.resize((30, 30), Image.LANCZOS)  # Resize icon
         self.music_icon = ImageTk.PhotoImage(self.music_icon)
 
         self.docs_icon = Image.open('docs_icon.png')
-        self.docs_icon = self.docs_icon.resize((50, 50), Image.LANCZOS)  # Resize icon
+        self.docs_icon = self.docs_icon.resize((30, 30), Image.LANCZOS)  # Resize icon
         self.docs_icon = ImageTk.PhotoImage(self.docs_icon)
 
         # Add the music icon to the top of the sidebar
