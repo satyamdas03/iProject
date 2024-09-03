@@ -1,8 +1,10 @@
-import customtkinter as ctk
+import tkinter as tk
+from tkinter import Text, Label, Button
 import json  # or any other storage solution you prefer
 import threading
 import time
 import re
+
 
 def organize_tasks(corpus):
     # Initialize a list to store tasks with their times
@@ -39,41 +41,43 @@ def set_alarm(task, time_duration):
     # Implement alarm logic here
     pass
 
+
 def send_reminder(task):
     # Implement SMS sending logic
     pass
 
-class TaskOrganizerApp(ctk.CTk):
+
+class TaskOrganizerApp(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Task Organizer")
         self.geometry("400x600")  # Adjusted width for single-column layout
-        
+
         # Configure grid layout (single column)
         self.grid_columnconfigure(0, weight=1)
-        self.grid_rowconfigure(list(range(6)), weight=1)
-        
+        self.grid_rowconfigure(list(range(7)), weight=1)
+
         # Single Column: Task Input and Organize Button
-        self.task_input = ctk.CTkTextbox(self, width=300, height=150)
+        self.task_input = Text(self, width=40, height=8)
         self.task_input.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
-        
-        self.organize_button = ctk.CTkButton(self, text="Organize", command=self.organize_tasks)
+
+        self.organize_button = Button(self, text="Organize", command=self.organize_tasks)
         self.organize_button.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
 
-        self.tasks_label = ctk.CTkLabel(self, text="Tasks of the Day")
+        self.tasks_label = Label(self, text="Tasks of the Day")
         self.tasks_label.grid(row=2, column=0, padx=10, pady=(10, 0), sticky="n")
 
-        self.task_list = ctk.CTkTextbox(self, width=300, height=150)
+        self.task_list = Text(self, width=40, height=8)
         self.task_list.grid(row=3, column=0, padx=10, pady=10, sticky="nsew")
 
         # Documentation and Save Button
-        self.doc_label = ctk.CTkLabel(self, text="Document your day @10 pm to 10:30pm")
+        self.doc_label = Label(self, text="Document your day @10 pm to 10:30pm")
         self.doc_label.grid(row=4, column=0, padx=10, pady=(10, 0), sticky="s")
 
-        self.doc_input = ctk.CTkTextbox(self, width=300, height=100)
+        self.doc_input = Text(self, width=40, height=6)
         self.doc_input.grid(row=5, column=0, padx=10, pady=10, sticky="nsew")
 
-        self.save_button = ctk.CTkButton(self, text="Save", command=self.save_documentation)
+        self.save_button = Button(self, text="Save", command=self.save_documentation)
         self.save_button.grid(row=6, column=0, padx=10, pady=10, sticky="ew")
 
     def organize_tasks(self):
@@ -86,6 +90,7 @@ class TaskOrganizerApp(ctk.CTk):
     def save_documentation(self):
         # Implement the save logic here
         pass
+
 
 if __name__ == "__main__":
     app = TaskOrganizerApp()
