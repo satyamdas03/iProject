@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import Text, Label, Button
+from tkinter import Text, Label, Button, Frame, PhotoImage
 import json  # or any other storage solution you prefer
 import threading
 import time
@@ -51,33 +51,53 @@ class TaskOrganizerApp(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Task Organizer")
-        self.geometry("400x600")  # Adjusted width for single-column layout
+        self.geometry("500x600")  # Adjusted width to account for sidebar
+
+        # Create the sidebar frame
+        # sidebar = Frame(self, width=100, bg='grey')
+        # sidebar.pack(side='left', fill='y')
+
+        # Load icons and store them as instance variables
+        # self.music_icon = PhotoImage(file='music_icon.png')
+        # self.docs_icon = PhotoImage(file='docs_icon.png')
+
+        # Add the music icon to the top of the sidebar
+        # music_label = Label(sidebar, image=self.music_icon, bg='grey')
+        # music_label.pack(pady=10)
+
+        # Add the DOCs icon to the bottom of the sidebar
+        # docs_label = Label(sidebar, image=self.docs_icon, bg='grey')
+        # docs_label.pack(side='bottom', pady=10)
+
+        # Create a frame for the main content
+        main_frame = Frame(self)
+        main_frame.pack(side='left', fill='both', expand=True)
 
         # Configure grid layout (single column)
-        self.grid_columnconfigure(0, weight=1)
-        self.grid_rowconfigure(list(range(7)), weight=1)
+        main_frame.grid_columnconfigure(0, weight=1)
+        main_frame.grid_rowconfigure(list(range(7)), weight=1)
 
         # Single Column: Task Input and Organize Button
-        self.task_input = Text(self, width=40, height=8)
+        self.task_input = Text(main_frame, width=40, height=8)
         self.task_input.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
 
-        self.organize_button = Button(self, text="Organize", command=self.organize_tasks)
+        self.organize_button = Button(main_frame, text="Organize", command=self.organize_tasks)
         self.organize_button.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
 
-        self.tasks_label = Label(self, text="Tasks of the Day", font=("Arial", 12, "bold"))
+        self.tasks_label = Label(main_frame, text="Tasks of the Day", font=("Arial", 12, "bold"))
         self.tasks_label.grid(row=2, column=0, padx=10, pady=(10, 0), sticky="n")
 
-        self.task_list = Text(self, width=40, height=8)
+        self.task_list = Text(main_frame, width=40, height=8)
         self.task_list.grid(row=3, column=0, padx=10, pady=10, sticky="nsew")
 
         # Documentation and Save Button
-        self.doc_label = Label(self, text="Document your day @10 pm to 10:30pm", font=("Arial", 12, "bold"))
+        self.doc_label = Label(main_frame, text="Document your day @10 pm to 10:30pm", font=("Arial", 12, "bold"))
         self.doc_label.grid(row=4, column=0, padx=10, pady=(10, 0), sticky="s")
 
-        self.doc_input = Text(self, width=40, height=6)
+        self.doc_input = Text(main_frame, width=40, height=6)
         self.doc_input.grid(row=5, column=0, padx=10, pady=10, sticky="nsew")
 
-        self.save_button = Button(self, text="Save", command=self.save_documentation)
+        self.save_button = Button(main_frame, text="Save", command=self.save_documentation)
         self.save_button.grid(row=6, column=0, padx=10, pady=10, sticky="ew")
 
     def organize_tasks(self):
