@@ -59,11 +59,11 @@ class TaskOrganizerApp(tk.Tk):
         sidebar.pack(side='right', fill='y')
 
         # Load icons with Pillow and resize them
-        self.music_icon = Image.open('music_icon.png')
+        self.music_icon = Image.open('icons/music_icon.png')
         self.music_icon = self.music_icon.resize((30, 30), Image.LANCZOS)  # Resize icon
         self.music_icon = ImageTk.PhotoImage(self.music_icon)
 
-        self.docs_icon = Image.open('docs_icon.png')
+        self.docs_icon = Image.open('icons/docs_icon.png')
         self.docs_icon = self.docs_icon.resize((30, 30), Image.LANCZOS)  # Resize icon
         self.docs_icon = ImageTk.PhotoImage(self.docs_icon)
 
