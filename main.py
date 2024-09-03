@@ -1,5 +1,6 @@
 import tkinter as tk
-from tkinter import Text, Label, Button, Frame, PhotoImage
+from tkinter import Text, Label, Button, Frame
+from PIL import Image, ImageTk
 import json  # or any other storage solution you prefer
 import threading
 import time
@@ -51,29 +52,32 @@ class TaskOrganizerApp(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Task Organizer")
-        self.geometry("700x600")  # Adjusted width to account for sidebar
+        self.geometry("700x600")  # Increased width to accommodate sidebar
 
         # Create the sidebar frame
-        # sidebar = Frame(self, width=100, bg='grey')
-        # sidebar.pack(side='left', fill='y')
+        sidebar = Frame(self, width=100, bg='grey')
+        sidebar.pack(side='left', fill='y')
 
-        # Load icons and store them as instance variables
-        # self.music_icon = PhotoImage(file='music_icon.png')
-        # self.docs_icon = PhotoImage(file='docs_icon.png')
+        # Load icons with Pillow and resize them
+        self.music_icon = Image.open('music_icon.png')
+        self.music_icon = self.music_icon.resize((50, 50), Image.LANCZOS)  # Resize icon
+        self.music_icon = ImageTk.PhotoImage(self.music_icon)
+
+        self.docs_icon = Image.open('docs_icon.png')
+        self.docs_icon = self.docs_icon.resize((50, 50), Image.LANCZOS)  # Resize icon
+        self.docs_icon = ImageTk.PhotoImage(self.docs_icon)
 
         # Add the music icon to the top of the sidebar
-        # music_label = Label(sidebar, image=self.music_icon, bg='grey')
-        # music_label.pack(pady=10)
+        music_label = Label(sidebar, image=self.music_icon, bg='grey')
+        music_label.pack(pady=10)
 
         # Add the DOCs icon to the bottom of the sidebar
-        # docs_label = Label(sidebar, image=self.docs_icon, bg='grey')
-        # docs_label.pack(side='bottom', pady=10)
-
-        #------------------------------------------------------
+        docs_label = Label(sidebar, image=self.docs_icon, bg='grey')
+        docs_label.pack(side='bottom', pady=10)
 
         # Create a frame for the main content
         main_frame = Frame(self)
-        main_frame.pack(side='left', fill='both', expand=True)
+        main_frame.pack(side='left', fill='both', expand=True)  # Allow main_frame to expand
 
         # Configure grid layout (single column)
         main_frame.grid_columnconfigure(0, weight=1)
@@ -93,7 +97,7 @@ class TaskOrganizerApp(tk.Tk):
         self.task_list.grid(row=3, column=0, padx=10, pady=10, sticky="nsew")
 
         # Documentation and Save Button
-        self.doc_label = Label(main_frame, text="Document your day @10 pm to 10:30pm", font=("Arial", 12, "bold"))
+        self.doc_label = Label(main_frame, text="Document your day from 10 pm to 10:30pm", font=("Arial", 12, "bold"))
         self.doc_label.grid(row=4, column=0, padx=10, pady=(10, 0), sticky="s")
 
         self.doc_input = Text(main_frame, width=40, height=6)
