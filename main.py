@@ -47,26 +47,34 @@ class TaskOrganizerApp(ctk.CTk):
         super().__init__()
         self.title("Task Organizer")
         self.geometry("800x600")
-
-        # Left Column
-        self.task_input = ctk.CTkTextbox(self, width=200, height=300)
-        self.task_input.pack(side="left", padx=10, pady=10)
+        
+        # Configure grid layout (rows and columns)
+        self.grid_columnconfigure((0, 1), weight=1)
+        self.grid_rowconfigure((0, 1, 2, 3), weight=1)
+        
+        # Left Column: Task Input and Organize Button
+        self.task_input = ctk.CTkTextbox(self, width=200, height=200)
+        self.task_input.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
+        
         self.organize_button = ctk.CTkButton(self, text="Organize", command=self.organize_tasks)
-        self.organize_button.pack(side="left", padx=10, pady=10)
+        self.organize_button.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
 
-        # Right Column
+        # Right Column: Tasks of the Day
         self.tasks_label = ctk.CTkLabel(self, text="Tasks of the Day")
-        self.tasks_label.pack(side="top", padx=10, pady=10)
-        self.task_list = ctk.CTkTextbox(self, width=200, height=300)
-        self.task_list.pack(side="top", padx=10, pady=10)
+        self.tasks_label.grid(row=0, column=1, padx=10, pady=(10, 0), sticky="n")
 
-        # Documentation Section
+        self.task_list = ctk.CTkTextbox(self, width=200, height=200)
+        self.task_list.grid(row=1, column=1, padx=10, pady=10, sticky="nsew")
+
+        # Bottom Section: Documentation and Save Button
         self.doc_label = ctk.CTkLabel(self, text="Document your day @10 pm to 10:30pm")
-        self.doc_label.pack(side="bottom", padx=10, pady=10)
-        self.doc_input = ctk.CTkTextbox(self, width=200, height=100)
-        self.doc_input.pack(side="bottom", padx=10, pady=10)
+        self.doc_label.grid(row=2, column=1, padx=10, pady=(10, 0), sticky="s")
+
         self.save_button = ctk.CTkButton(self, text="Save", command=self.save_documentation)
-        self.save_button.pack(side="bottom", padx=10, pady=10)
+        self.save_button.grid(row=3, column=1, padx=10, pady=10, sticky="ew")
+
+        self.doc_input = ctk.CTkTextbox(self, width=200, height=100)
+        self.doc_input.grid(row=3, column=0, padx=10, pady=10, sticky="nsew")
 
     def organize_tasks(self):
         corpus = self.task_input.get("1.0", "end-1c")
