@@ -8,26 +8,23 @@ def organize_tasks(corpus):
     # Initialize a list to store tasks with their times
     tasks = []
 
-    # Split the input text into lines
-    lines = corpus.splitlines()
+    # Regular expression to find tasks and their time from sentences like "task1 will take 20 minutes"
+    pattern = r"(.*?)(?:will take|needs|takes|requires)\s*(\d+)\s*(minutes|minute|hours|hour)"
 
-    # Regular expression to find the task and time
-    pattern = r"(.*):\s*(\d+)\s*(minutes|minute|hours|hour)?"
+    # Find all matches in the input corpus
+    matches = re.findall(pattern, corpus, re.IGNORECASE)
 
-    # Parse each line
-    for line in lines:
-        match = re.match(pattern, line.strip(), re.IGNORECASE)
-        if match:
-            task_name = match.group(1).strip()
-            time_value = int(match.group(2))
-            time_unit = match.group(3)
+    for match in matches:
+        task_name = match[0].strip()
+        time_value = int(match[1])
+        time_unit = match[2].lower()
 
-            # Convert hours to minutes if needed
-            if time_unit and 'hour' in time_unit.lower():
-                time_value *= 60
+        # Convert hours to minutes if needed
+        if 'hour' in time_unit:
+            time_value *= 60
 
-            # Append the task and its duration to the list
-            tasks.append((task_name, time_value))
+        # Append the task and its duration to the list
+        tasks.append((task_name, time_value))
 
     # Sort tasks based on time in descending order
     tasks.sort(key=lambda x: x[1], reverse=True)
@@ -62,7 +59,6 @@ class TaskOrganizerApp(ctk.CTk):
         self.tasks_label.pack(side="top", padx=10, pady=10)
         self.task_list = ctk.CTkTextbox(self, width=200, height=300)
         self.task_list.pack(side="top", padx=10, pady=10)
-        # Add alarm and reminder buttons/icons for each task
 
         # Documentation Section
         self.doc_label = ctk.CTkLabel(self, text="Document your day @10 pm to 10:30pm")
@@ -71,9 +67,6 @@ class TaskOrganizerApp(ctk.CTk):
         self.doc_input.pack(side="bottom", padx=10, pady=10)
         self.save_button = ctk.CTkButton(self, text="Save", command=self.save_documentation)
         self.save_button.pack(side="bottom", padx=10, pady=10)
-
-        # Sidebar for music and other icons
-        # Implement a sidebar with music and document navigation functionality
 
     def organize_tasks(self):
         corpus = self.task_input.get("1.0", "end-1c")
