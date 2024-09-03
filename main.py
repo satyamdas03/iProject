@@ -1,10 +1,11 @@
 import tkinter as tk
-from tkinter import Text, Label, Button, Frame, Toplevel, Scrollbar
+from tkinter import Text, Label, Button, Frame, Toplevel, Scrollbar, Entry
 from PIL import Image, ImageTk
-import json  # or any other storage solution you prefer
+import json
 import threading
 import time
 import re
+import webbrowser
 
 
 def organize_tasks(corpus):
@@ -78,6 +79,9 @@ class TaskOrganizerApp(tk.Tk):
         # Bind the docs icon to the method
         self.docs_label.bind("<Button-1>", self.show_documentation)
 
+        # Bind the music icon to the method
+        music_label.bind("<Button-1>", self.open_music_search)
+
         # Create a frame for the main content
         main_frame = Frame(self)
         main_frame.pack(side='left', fill='both', expand=True)  # Allow main_frame to expand
@@ -144,6 +148,29 @@ class TaskOrganizerApp(tk.Tk):
         for entry in self.documentation:
             text_area.insert('end', entry + "\n\n")
 
+    def open_music_search(self, event):
+        # Create a new window for music search
+        search_window = Toplevel(self)
+        search_window.title("Music Search")
+        search_window.geometry("300x150")
+
+        # Add an entry widget for music search
+        search_label = Label(search_window, text="Enter music name:")
+        search_label.pack(pady=5)
+
+        self.search_entry = Entry(search_window, width=30)
+        self.search_entry.pack(pady=5)
+
+        # Add a play button
+        play_button = Button(search_window, text="Play", command=self.play_music)
+        play_button.pack(pady=10)
+
+    def play_music(self):
+        music_name = self.search_entry.get()
+        if music_name:
+            # Open a web browser to search for the music on YouTube
+            search_query = '+'.join(music_name.split())
+            webbrowser.open(f"https://www.youtube.com/results?search_query={search_query}")
 
 if __name__ == "__main__":
     app = TaskOrganizerApp()
