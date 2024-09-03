@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import Text, Label, Button, Frame
+from tkinter import Text, Label, Button, Frame, Toplevel, Scrollbar
 from PIL import Image, ImageTk
 import json  # or any other storage solution you prefer
 import threading
@@ -72,8 +72,11 @@ class TaskOrganizerApp(tk.Tk):
         music_label.pack(pady=10)
 
         # Add the DOCs icon to the bottom of the sidebar
-        docs_label = Label(sidebar, image=self.docs_icon, bg='grey')
-        docs_label.pack(side='bottom', pady=10)
+        self.docs_label = Label(sidebar, image=self.docs_icon, bg='grey')
+        self.docs_label.pack(side='bottom', pady=10)
+
+        # Bind the docs icon to the method
+        self.docs_label.bind("<Button-1>", self.show_documentation)
 
         # Create a frame for the main content
         main_frame = Frame(self)
@@ -106,6 +109,8 @@ class TaskOrganizerApp(tk.Tk):
         self.save_button = Button(main_frame, text="Save", command=self.save_documentation)
         self.save_button.grid(row=6, column=0, padx=10, pady=10, sticky="ew")
 
+        self.documentation = []  # List to store documentation entries
+
     def organize_tasks(self):
         corpus = self.task_input.get("1.0", "end-1c")
         tasks = organize_tasks(corpus)
@@ -114,8 +119,30 @@ class TaskOrganizerApp(tk.Tk):
             self.task_list.insert("end", task + "\n")
 
     def save_documentation(self):
-        # Implement the save logic here
-        pass
+        doc_text = self.doc_input.get("1.0", "end-1c")
+        if doc_text:
+            self.documentation.append(doc_text)  # Save documentation
+            self.doc_input.delete("1.0", "end")  # Clear the input field
+
+    def show_documentation(self, event):
+        # Create a new window to display documentation
+        doc_window = Toplevel(self)
+        doc_window.title("Saved Documentation")
+        doc_window.geometry("400x400")
+
+        # Add a text widget to the new window
+        text_area = Text(doc_window, wrap='word')
+        text_area.pack(expand=True, fill='both')
+
+        # Add a scrollbar
+        scrollbar = Scrollbar(text_area)
+        scrollbar.pack(side='right', fill='y')
+        text_area.config(yscrollcommand=scrollbar.set)
+        scrollbar.config(command=text_area.yview)
+
+        # Insert saved documentation into the text widget
+        for entry in self.documentation:
+            text_area.insert('end', entry + "\n\n")
 
 
 if __name__ == "__main__":
