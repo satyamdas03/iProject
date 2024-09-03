@@ -67,14 +67,14 @@ class TaskOrganizerApp(ctk.CTk):
         self.task_list.grid(row=1, column=1, padx=10, pady=10, sticky="nsew")
 
         # Bottom Section: Documentation and Save Button
-        self.doc_label = ctk.CTkLabel(self, text="Document your day @10 pm to 10:30pm")
-        self.doc_label.grid(row=2, column=1, padx=10, pady=(10, 0), sticky="s")
+        # self.doc_label = ctk.CTkLabel(self, text="Document your day @10 pm to 10:30pm")
+        # self.doc_label.grid(row=2, column=1, padx=10, pady=(10, 0), sticky="s")
 
-        self.save_button = ctk.CTkButton(self, text="Save", command=self.save_documentation)
-        self.save_button.grid(row=3, column=1, padx=10, pady=10, sticky="ew")
+        # self.save_button = ctk.CTkButton(self, text="Save", command=self.save_documentation)
+        # self.save_button.grid(row=3, column=1, padx=10, pady=10, sticky="ew")
 
-        self.doc_input = ctk.CTkTextbox(self, width=200, height=100)
-        self.doc_input.grid(row=3, column=0, padx=10, pady=10, sticky="nsew")
+        # self.doc_input = ctk.CTkTextbox(self, width=200, height=100)
+        # self.doc_input.grid(row=3, column=0, padx=10, pady=10, sticky="nsew")
 
     def organize_tasks(self):
         corpus = self.task_input.get("1.0", "end-1c")
