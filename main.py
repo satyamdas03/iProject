@@ -2,11 +2,40 @@ import customtkinter as ctk
 import json  # or any other storage solution you prefer
 import threading
 import time
+import re
 
 def organize_tasks(corpus):
-    # Implement logic to parse corpus, extract tasks and times, and sort them
-    tasks = []  # Processed and sorted tasks
-    return tasks
+    # Initialize a list to store tasks with their times
+    tasks = []
+
+    # Split the input text into lines
+    lines = corpus.splitlines()
+
+    # Regular expression to find the task and time
+    pattern = r"(.*):\s*(\d+)\s*(minutes|minute|hours|hour)?"
+
+    # Parse each line
+    for line in lines:
+        match = re.match(pattern, line.strip(), re.IGNORECASE)
+        if match:
+            task_name = match.group(1).strip()
+            time_value = int(match.group(2))
+            time_unit = match.group(3)
+
+            # Convert hours to minutes if needed
+            if time_unit and 'hour' in time_unit.lower():
+                time_value *= 60
+
+            # Append the task and its duration to the list
+            tasks.append((task_name, time_value))
+
+    # Sort tasks based on time in descending order
+    tasks.sort(key=lambda x: x[1], reverse=True)
+
+    # Format the sorted tasks for display
+    sorted_tasks = [f"{task[0]}: {task[1]} minutes" for task in tasks]
+
+    return sorted_tasks
 
 def set_alarm(task, time_duration):
     # Implement alarm logic here
