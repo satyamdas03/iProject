@@ -54,20 +54,20 @@ class TaskOrganizerApp(tk.Tk):
         self.geometry("700x600")  # Adjusted width to account for sidebar
 
         # Create the sidebar frame
-        sidebar = Frame(self, width=100, bg='grey')
-        sidebar.pack(side='left', fill='y')
+        # sidebar = Frame(self, width=100, bg='grey')
+        # sidebar.pack(side='left', fill='y')
 
         # Load icons and store them as instance variables
-        self.music_icon = PhotoImage(file='music_icon.png')
-        self.docs_icon = PhotoImage(file='docs_icon.png')
+        # self.music_icon = PhotoImage(file='music_icon.png')
+        # self.docs_icon = PhotoImage(file='docs_icon.png')
 
         # Add the music icon to the top of the sidebar
-        music_label = Label(sidebar, image=self.music_icon, bg='grey')
-        music_label.pack(pady=10)
+        # music_label = Label(sidebar, image=self.music_icon, bg='grey')
+        # music_label.pack(pady=10)
 
         # Add the DOCs icon to the bottom of the sidebar
-        docs_label = Label(sidebar, image=self.docs_icon, bg='grey')
-        docs_label.pack(side='bottom', pady=10)
+        # docs_label = Label(sidebar, image=self.docs_icon, bg='grey')
+        # docs_label.pack(side='bottom', pady=10)
 
         #------------------------------------------------------
 
