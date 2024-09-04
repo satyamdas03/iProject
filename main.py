@@ -41,7 +41,7 @@ class TaskOrganizerApp(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Task Organizer")
-        self.geometry("600x750")
+        self.geometry("600x1000")
 
         # Sidebar
         sidebar = Frame(self, width=80, bg='grey')
@@ -88,6 +88,13 @@ class TaskOrganizerApp(tk.Tk):
         main_frame = Frame(self)
         main_frame.pack(side='left', fill='both', expand=True)
 
+        # Task Input Section
+        self.task_date_label = Label(main_frame, text="Enter Date (YYYY-MM-DD):")
+        self.task_date_label.pack(padx=10, pady=(10, 0))
+
+        self.task_date_entry = Entry(main_frame)
+        self.task_date_entry.pack(padx=10, pady=5)
+
         self.task_input = Text(main_frame, width=40, height=8)
         self.task_input.pack(padx=10, pady=10)
 
@@ -115,6 +122,7 @@ class TaskOrganizerApp(tk.Tk):
         # Update the scroll region whenever the frame size changes
         self.task_frame.bind("<Configure>", lambda e: self.task_canvas.configure(scrollregion=self.task_canvas.bbox("all")))
 
+        # Documentation Section
         self.doc_label = Label(main_frame, text="Document your day from 10 pm to 10:30pm", font=("Arial", 12, "bold"))
         self.doc_label.pack(padx=10, pady=(10, 0))
 
@@ -122,19 +130,20 @@ class TaskOrganizerApp(tk.Tk):
         self.doc_input.pack(padx=10, pady=10)
 
         self.save_button = Button(main_frame, text="Save", command=self.save_documentation)
-        self.save_button.pack(padx=10, pady=10)
+        self.save_button.pack(padx=10, pady=(5, 20))
 
         # Data storage
-        self.documentation = []
-        self.saved_tasks = []
+        self.documentation = {}
+        self.saved_tasks = {}
 
     def organize_tasks(self):
+        date = self.task_date_entry.get()
         corpus = self.task_input.get("1.0", "end-1c")
         tasks = organize_tasks(corpus)
 
-        # Clear the previous tasks
-        for widget in self.task_frame.winfo_children():
-            widget.destroy()
+        # Save tasks by date
+        if date not in self.saved_tasks:
+            self.saved_tasks[date] = []
 
         for task_name, time_value in tasks:
             task_with_time = f"{task_name}: {time_value} minutes"
@@ -156,10 +165,7 @@ class TaskOrganizerApp(tk.Tk):
             reminder_button.pack(side='right')
 
             # Save the task
-            self.save_tasks(task_with_time)
-
-    def save_tasks(self, task):
-        self.saved_tasks.append(task)
+            self.saved_tasks[date].append(task_with_time)
 
     def show_tasks(self, event):
         # Create a new window to display saved tasks
@@ -177,14 +183,20 @@ class TaskOrganizerApp(tk.Tk):
         text_area.config(yscrollcommand=scrollbar.set)
         scrollbar.config(command=text_area.yview)
 
-        # Insert saved tasks into the text widget
-        for entry in self.saved_tasks:
-            text_area.insert('end', entry + "\n\n")
+        # Insert saved tasks into the text widget by date
+        for date, tasks in self.saved_tasks.items():
+            text_area.insert('end', f"Date: {date}\n")
+            for task in tasks:
+                text_area.insert('end', f"  - {task}\n")
+            text_area.insert('end', "\n")
 
     def save_documentation(self):
+        date = self.task_date_entry.get()  # Use the date from the task section
         doc_text = self.doc_input.get("1.0", "end-1c")
         if doc_text:
-            self.documentation.append(doc_text)  # Save documentation
+            if date not in self.documentation:
+                self.documentation[date] = []
+            self.documentation[date].append(doc_text)  # Save documentation
             self.doc_input.delete("1.0", "end")  # Clear the input field
 
     def show_documentation(self, event):
@@ -193,44 +205,51 @@ class TaskOrganizerApp(tk.Tk):
         doc_window.title("Saved Documentation")
         doc_window.geometry("400x400")
 
+        # Add a text widget to the new window
         text_area = Text(doc_window, wrap='word')
         text_area.pack(expand=True, fill='both')
 
+        # Add a scrollbar
         scrollbar = Scrollbar(text_area)
         scrollbar.pack(side='right', fill='y')
         text_area.config(yscrollcommand=scrollbar.set)
         scrollbar.config(command=text_area.yview)
 
-        for entry in self.documentation:
-            text_area.insert('end', entry + "\n\n")
+        # Insert saved documentation into the text widget by date
+        for date, docs in self.documentation.items():
+            text_area.insert('end', f"Date: {date}\n")
+            for doc in docs:
+                text_area.insert('end', f"  - {doc}\n")
+            text_area.insert('end', "\n")
 
     def open_music_search(self, event):
-        music_window = Toplevel(self)
-        music_window.title("Music Search")
-        music_window.geometry("400x200")
+        # Create a search bar
+        search_window = Toplevel(self)
+        search_window.title("Music Search")
+        search_window.geometry("300x150")
 
-        search_label = Label(music_window, text="Enter Music Name:")
+        search_label = Label(search_window, text="Enter song name:")
         search_label.pack(pady=10)
 
-        search_entry = Entry(music_window, width=50)
+        search_entry = Entry(search_window)
         search_entry.pack(pady=5)
 
-        play_button = Button(music_window, text="Play", command=lambda: self.play_music(search_entry.get()))
+        play_button = Button(search_window, text="Play", command=lambda: self.play_music(search_entry.get()))
         play_button.pack(pady=10)
 
-    def play_music(self, music_name):
-        if music_name:
-            search_query = music_name.replace(' ', '+')
-            url = f"https://www.youtube.com/results?search_query={search_query}"
-            webbrowser.open(url)
+    def play_music(self, song_name):
+        # Open a web browser and search for the song
+        query = song_name.replace(' ', '+')
+        url = f"https://www.google.com/search?q={query}+site:youtube.com"
+        webbrowser.open(url)
 
     def set_alarm(self, task):
-        time.sleep(2)  # Simulate the delay
-        threading.Thread(target=set_alarm, args=(task,)).start()
+        # Implement the alarm functionality here
+        pass
 
     def send_reminder(self, task):
-        threading.Thread(target=send_reminder, args=(task,)).start()
-
+        # Implement the reminder functionality here
+        pass
 
 if __name__ == "__main__":
     app = TaskOrganizerApp()
