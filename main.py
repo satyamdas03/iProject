@@ -70,6 +70,10 @@ class TaskOrganizerApp(tk.Tk):
         self.task_label = Label(sidebar, image=self.task_icon, bg='grey')
         self.task_label.pack(pady=10)
 
+        # Add the Project icon to the sidebar
+        self.project_label = Label(sidebar, image=self.project_icon, bg='grey')
+        self.project_label.pack(pady=10)
+
         # Bind the docs icon to the method
         self.docs_label.bind("<Button-1>", self.show_documentation)
 
