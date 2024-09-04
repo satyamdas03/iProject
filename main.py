@@ -41,7 +41,7 @@ class TaskOrganizerApp(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Task Organizer")
-        self.geometry("1000x550")
+        self.geometry("600x750")
 
         # Sidebar
         sidebar = Frame(self, width=80, bg='grey')
