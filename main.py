@@ -229,25 +229,26 @@ class TaskOrganizerApp(tk.Tk):
         # Insert saved tasks into the text widget by date
         for date, tasks in self.saved_tasks.items():
             # Create a frame for the date and delete icon
-            date_frame = Frame(text_area)
+            date_frame = Frame(task_window)
             date_frame.pack(fill='x', pady=5)
 
             # Add the date label with some padding on the bottom
             date_label = Label(date_frame, text=f"Date: {date}", anchor='w')
-            date_label.pack(side='left', fill='x', padx=(5, 0), pady=(5, 0))  # Adjust the padding here
+            date_label.pack(side='left', fill='x', padx=(5, 0))
 
             # Add the delete button with the delete icon
             delete_button = Button(date_frame, image=self.delete_icon, command=lambda d=date: self.delete_tasks(d, task_window))
-            delete_button.pack(side='right', padx=5, pady=(5, 0))  # Adjust the padding here
+            delete_button.pack(side='right', padx=5)
 
-            # Add a bit of vertical space after the bar
-            text_area.insert('end', '\n')  # Insert a newline after the bar
+            # Place the date and delete icon frame into the Text widget
+            text_area.window_create('end', window=date_frame)
+            text_area.insert('end', '\n')
 
-            # Insert tasks for the date
+            # Insert tasks for the date below the date frame
             for task in tasks:
                 task_text = f"  - {task}\n"
                 text_area.insert('end', task_text)
-            text_area.insert('end', "\n")
+            text_area.insert('end', "\n")  # Add extra newline after tasks
 
 
 
@@ -318,25 +319,26 @@ class TaskOrganizerApp(tk.Tk):
         # Insert saved documentation into the text widget by date
         for date, docs in self.documentation.items():
             # Create a frame for the date and delete icon
-            date_frame = Frame(text_area)
+            date_frame = Frame(doc_window)
             date_frame.pack(fill='x', pady=5)
 
             # Add the date label with some padding on the bottom
             date_label = Label(date_frame, text=f"Date: {date}", anchor='w')
-            date_label.pack(side='left', fill='x', padx=(5, 0), pady=(5, 0))  # Adjust the padding here
+            date_label.pack(side='left', fill='x', padx=(5, 0))
 
             # Add the delete button with the delete icon
             delete_button = Button(date_frame, image=self.delete_icon, command=lambda d=date: self.delete_documentation(d, doc_window))
-            delete_button.pack(side='right', padx=5, pady=(5, 0))  # Adjust the padding here
+            delete_button.pack(side='right', padx=5)
 
-            # Add a bit of vertical space after the bar
-            text_area.insert('end', '\n')  # Insert a newline after the bar
+            # Place the date and delete icon frame into the Text widget
+            text_area.window_create('end', window=date_frame)
+            text_area.insert('end', '\n')
 
-            # Insert documentation for the date
+            # Insert documentation for the date below the date frame
             for doc in docs:
                 doc_text = f"  - {doc}\n"
                 text_area.insert('end', doc_text)
-            text_area.insert('end', "\n")
+            text_area.insert('end', "\n")  # Add extra newline after documentation
 
 
 
