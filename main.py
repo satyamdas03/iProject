@@ -63,6 +63,10 @@ class TaskOrganizerApp(tk.Tk):
         self.reminder_icon = Image.open('icons/reminder_icon.png').resize((20, 20), Image.LANCZOS)  # Reminder icon
         self.reminder_icon = ImageTk.PhotoImage(self.reminder_icon)
 
+        #delete icon
+        self.delete_icon = Image.open('icons/delete_icon.png').resize((20, 20), Image.LANCZOS)
+        self.delete_icon = ImageTk.PhotoImage(self.delete_icon)
+
         # Add icons to the sidebar
         music_label = Label(sidebar, image=self.music_icon, bg='grey')
         music_label.pack(pady=10)
@@ -170,6 +174,29 @@ class TaskOrganizerApp(tk.Tk):
         # Save data to file
         self.save_to_file()
 
+    # def show_tasks(self, event):
+    #     # Create a new window to display saved tasks
+    #     task_window = Toplevel(self)
+    #     task_window.title("Saved Tasks")
+    #     task_window.geometry("400x400")
+
+    #     # Add a text widget to the new window
+    #     text_area = Text(task_window, wrap='word')
+    #     text_area.pack(expand=True, fill='both')
+
+    #     # Add a scrollbar
+    #     scrollbar = Scrollbar(text_area)
+    #     scrollbar.pack(side='right', fill='y')
+    #     text_area.config(yscrollcommand=scrollbar.set)
+    #     scrollbar.config(command=text_area.yview)
+
+    #     # Insert saved tasks into the text widget by date
+    #     for date, tasks in self.saved_tasks.items():
+    #         text_area.insert('end', f"Date: {date}\n")
+    #         for task in tasks:
+    #             text_area.insert('end', f"  - {task}\n")
+    #         text_area.insert('end', "\n")
+
     def show_tasks(self, event):
         # Create a new window to display saved tasks
         task_window = Toplevel(self)
@@ -188,10 +215,23 @@ class TaskOrganizerApp(tk.Tk):
 
         # Insert saved tasks into the text widget by date
         for date, tasks in self.saved_tasks.items():
-            text_area.insert('end', f"Date: {date}\n")
+            # Create a frame for the date and delete icon
+            date_frame = Frame(text_area)
+            date_frame.pack(fill='x', pady=5)
+
+            # Add the date label
+            date_label = Label(date_frame, text=f"Date: {date}")
+            date_label.pack(side='left')
+
+            # Add the delete button with the delete icon
+            delete_button = Button(date_frame, image=self.delete_icon, command=lambda d=date: self.delete_tasks(d, task_window))
+            delete_button.pack(side='right')
+
+            # Insert tasks for the date
             for task in tasks:
                 text_area.insert('end', f"  - {task}\n")
             text_area.insert('end', "\n")
+
 
     def save_documentation(self):
         date = self.task_date_entry.get()  # Use the date from the task section
@@ -204,6 +244,29 @@ class TaskOrganizerApp(tk.Tk):
 
         # Save data to file
         self.save_to_file()
+
+    # def show_documentation(self, event):
+    #     # Create a new window to display documentation
+    #     doc_window = Toplevel(self)
+    #     doc_window.title("Saved Documentation")
+    #     doc_window.geometry("400x400")
+
+    #     # Add a text widget to the new window
+    #     text_area = Text(doc_window, wrap='word')
+    #     text_area.pack(expand=True, fill='both')
+
+    #     # Add a scrollbar
+    #     scrollbar = Scrollbar(text_area)
+    #     scrollbar.pack(side='right', fill='y')
+    #     text_area.config(yscrollcommand=scrollbar.set)
+    #     scrollbar.config(command=text_area.yview)
+
+    #     # Insert saved documentation into the text widget by date
+    #     for date, docs in self.documentation.items():
+    #         text_area.insert('end', f"Date: {date}\n")
+    #         for doc in docs:
+    #             text_area.insert('end', f"  - {doc}\n")
+    #         text_area.insert('end', "\n")
 
     def show_documentation(self, event):
         # Create a new window to display documentation
@@ -223,10 +286,39 @@ class TaskOrganizerApp(tk.Tk):
 
         # Insert saved documentation into the text widget by date
         for date, docs in self.documentation.items():
-            text_area.insert('end', f"Date: {date}\n")
+            # Create a frame for the date and delete icon
+            date_frame = Frame(text_area)
+            date_frame.pack(fill='x', pady=5)
+
+            # Add the date label
+            date_label = Label(date_frame, text=f"Date: {date}")
+            date_label.pack(side='left')
+
+            # Add the delete button with the delete icon
+            delete_button = Button(date_frame, image=self.delete_icon, command=lambda d=date: self.delete_documentation(d, doc_window))
+            delete_button.pack(side='right')
+
+            # Insert documentation for the date
             for doc in docs:
                 text_area.insert('end', f"  - {doc}\n")
             text_area.insert('end', "\n")
+
+    def delete_tasks(self, date, window):
+        # Delete the tasks for the given date
+        if date in self.saved_tasks:
+            del self.saved_tasks[date]
+            self.save_to_file()  # Save the updated data
+            window.destroy()  # Close the window
+            self.show_tasks(None)  # Reopen to refresh the display
+
+    def delete_documentation(self, date, window):
+        # Delete the documentation for the given date
+        if date in self.documentation:
+            del self.documentation[date]
+            self.save_to_file()  # Save the updated data
+            window.destroy()  # Close the window
+            self.show_documentation(None)  # Reopen to refresh the display
+
 
     def open_music_search(self, event):
         search_window = Toplevel(self)
