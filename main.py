@@ -96,7 +96,7 @@ class TaskOrganizerApp(tk.Tk):
         self.task_date_entry = Entry(main_frame)
         self.task_date_entry.pack(padx=10, pady=5)
 
-        self.task_input = Text(main_frame, width=40, height=8)
+        self.task_input = Text(main_frame, width=60, height=8)
         self.task_input.pack(padx=10, pady=10)
 
         self.organize_button = Button(main_frame, text="Organize", command=self.organize_tasks)
@@ -174,29 +174,6 @@ class TaskOrganizerApp(tk.Tk):
         # Save data to file
         self.save_to_file()
 
-    # def show_tasks(self, event):
-    #     # Create a new window to display saved tasks
-    #     task_window = Toplevel(self)
-    #     task_window.title("Saved Tasks")
-    #     task_window.geometry("400x400")
-
-    #     # Add a text widget to the new window
-    #     text_area = Text(task_window, wrap='word')
-    #     text_area.pack(expand=True, fill='both')
-
-    #     # Add a scrollbar
-    #     scrollbar = Scrollbar(text_area)
-    #     scrollbar.pack(side='right', fill='y')
-    #     text_area.config(yscrollcommand=scrollbar.set)
-    #     scrollbar.config(command=text_area.yview)
-
-    #     # Insert saved tasks into the text widget by date
-    #     for date, tasks in self.saved_tasks.items():
-    #         text_area.insert('end', f"Date: {date}\n")
-    #         for task in tasks:
-    #             text_area.insert('end', f"  - {task}\n")
-    #         text_area.insert('end', "\n")
-
     def show_tasks(self, event):
         # Create a new window to display saved tasks
         task_window = Toplevel(self)
@@ -219,17 +196,18 @@ class TaskOrganizerApp(tk.Tk):
             date_frame = Frame(text_area)
             date_frame.pack(fill='x', pady=5)
 
-            # Add the date label
-            date_label = Label(date_frame, text=f"Date: {date}")
-            date_label.pack(side='left')
+            # Add the date label with some padding on the bottom
+            date_label = Label(date_frame, text=f"Date: {date}", anchor='w')
+            date_label.pack(side='left', fill='x', padx=(5, 0), pady=(5, 0))
 
             # Add the delete button with the delete icon
             delete_button = Button(date_frame, image=self.delete_icon, command=lambda d=date: self.delete_tasks(d, task_window))
-            delete_button.pack(side='right')
+            delete_button.pack(side='right', padx=5, pady=(5, 0))
 
             # Insert tasks for the date
             for task in tasks:
-                text_area.insert('end', f"  - {task}\n")
+                task_text = f"  - {task}\n"
+                text_area.insert('end', task_text)
             text_area.insert('end', "\n")
 
 
@@ -244,29 +222,6 @@ class TaskOrganizerApp(tk.Tk):
 
         # Save data to file
         self.save_to_file()
-
-    # def show_documentation(self, event):
-    #     # Create a new window to display documentation
-    #     doc_window = Toplevel(self)
-    #     doc_window.title("Saved Documentation")
-    #     doc_window.geometry("400x400")
-
-    #     # Add a text widget to the new window
-    #     text_area = Text(doc_window, wrap='word')
-    #     text_area.pack(expand=True, fill='both')
-
-    #     # Add a scrollbar
-    #     scrollbar = Scrollbar(text_area)
-    #     scrollbar.pack(side='right', fill='y')
-    #     text_area.config(yscrollcommand=scrollbar.set)
-    #     scrollbar.config(command=text_area.yview)
-
-    #     # Insert saved documentation into the text widget by date
-    #     for date, docs in self.documentation.items():
-    #         text_area.insert('end', f"Date: {date}\n")
-    #         for doc in docs:
-    #             text_area.insert('end', f"  - {doc}\n")
-    #         text_area.insert('end', "\n")
 
     def show_documentation(self, event):
         # Create a new window to display documentation
@@ -290,18 +245,20 @@ class TaskOrganizerApp(tk.Tk):
             date_frame = Frame(text_area)
             date_frame.pack(fill='x', pady=5)
 
-            # Add the date label
-            date_label = Label(date_frame, text=f"Date: {date}")
-            date_label.pack(side='left')
+            # Add the date label with some padding on the bottom
+            date_label = Label(date_frame, text=f"Date: {date}", anchor='w')
+            date_label.pack(side='left', fill='x', padx=(5, 0), pady=(5, 0))
 
             # Add the delete button with the delete icon
             delete_button = Button(date_frame, image=self.delete_icon, command=lambda d=date: self.delete_documentation(d, doc_window))
-            delete_button.pack(side='right')
+            delete_button.pack(side='right', padx=5, pady=(5, 0))
 
             # Insert documentation for the date
             for doc in docs:
-                text_area.insert('end', f"  - {doc}\n")
+                doc_text = f"  - {doc}\n"
+                text_area.insert('end', doc_text)
             text_area.insert('end', "\n")
+
 
     def delete_tasks(self, date, window):
         # Delete the tasks for the given date
