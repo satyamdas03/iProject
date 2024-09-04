@@ -55,8 +55,8 @@ class TaskOrganizerApp(tk.Tk):
         self.task_icon = Image.open('icons/task_icon.png').resize((30, 30), Image.LANCZOS)  # Task icon
         self.task_icon = ImageTk.PhotoImage(self.task_icon)
 
-        self.task_icon = Image.open('icons/project_icon.png').resize((30, 30), Image.LANCZOS)  # Task icon
-        self.task_icon = ImageTk.PhotoImage(self.task_icon)
+        self.project_icon = Image.open('icons/project_icon.png').resize((30, 30), Image.LANCZOS)  # Task icon
+        self.project_icon = ImageTk.PhotoImage(self.project_icon)
 
         # Add the music icon to the top of the sidebar
         music_label = Label(sidebar, image=self.music_icon, bg='grey')
