@@ -1,4 +1,25 @@
 {
-    "tasks": {},
-    "documentation": {}
+    "tasks": {
+        "2024-09-05": [
+            ". gym: 180 minutes",
+            "DSA: 120 minutes",
+            ". washingBottle: 3 minutes",
+            ". maggi: 2 minutes"
+        ],
+        "2024-09-10": [
+            ". project1: 180 minutes",
+            "DSA: 120 minutes",
+            ". CAT1 prep: 20 minutes"
+        ]
+    },
+    "documentation": {
+        "2024-09-05": [
+            "hello i am macintosh.",
+            "i am from earth.",
+            "The company's gross margin is 35.5%, reflecting a healthy profit margin on goods sold. The operating margin is 22.8%, showing efficient cost management. The liquidity ratios are 2.3, indicating strong liquidity and ability to cover short-term obligations. The net profit is 12.5 million USD, underscoring robust\u00a0profitability."
+        ],
+        "2024-09-10": [
+            "shashank chutiya hai."
+        ]
+    }
 }
