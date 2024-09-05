@@ -1,4 +1,21 @@
 {
-    "tasks": {},
-    "documentation": {}
+    "tasks": {
+        "2024-09-05": [
+            ". gym: 180 minutes",
+            "DSA: 120 minutes",
+            ". maggiMaking: 5 minutes",
+            ". washingBottle: 3 minutes"
+        ],
+        "2024-09-06": [
+            ". project1: 180 minutes",
+            "DSA: 120 minutes",
+            ". CAT1 prep: 20 minutes"
+        ]
+    },
+    "documentation": {
+        "2024-09-05": [
+            "hello i am macintosh.",
+            "i am from earth."
+        ]
+    }
 }

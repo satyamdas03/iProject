@@ -163,7 +163,7 @@ class TaskOrganizerApp(tk.Tk):
             task_label.pack(side='left')
 
             # Add alarm icon
-            alarm_button = Button(task_item_frame, image=self.alarm_icon, command=lambda t=task_with_time: self.set_alarm(t))
+            alarm_button = Button(task_item_frame, image=self.alarm_icon, command=lambda t=task_with_time: self.set_alarm_dialog(t))
             alarm_button.pack(side='right', padx=5)
 
             # Add reminder icon
@@ -176,8 +176,28 @@ class TaskOrganizerApp(tk.Tk):
         # Save data to file
         self.save_to_file()
 
+    # def set_alarm_dialog(self, task):
+    #     """Open a dialog to set alarm time for the task."""
+    #     alarm_window = Toplevel(self)
+    #     alarm_window.title(f"Set Alarm for {task}")
+    #     alarm_window.geometry("300x200")
+
+    #     Label(alarm_window, text=f"Set alarm for {task}").pack(pady=10)
+
+    #     self.hour_entry = Entry(alarm_window, width=5)
+    #     self.hour_entry.insert(0, "HH")
+    #     self.hour_entry.pack(pady=5)
+
+    #     self.minute_entry = Entry(alarm_window, width=5)
+    #     self.minute_entry.insert(0, "MM")
+    #     self.minute_entry.pack(pady=5)
+
+    #     set_alarm_button = Button(alarm_window, text="Set Alarm", command=lambda: self.set_alarm(task, alarm_window))
+    #     set_alarm_button.pack(pady=10)
+
     def set_alarm_dialog(self, task):
         """Open a dialog to set alarm time for the task."""
+        print(f"Alarm dialog triggered for task: {task}")  # Add this for debugging
         alarm_window = Toplevel(self)
         alarm_window.title(f"Set Alarm for {task}")
         alarm_window.geometry("300x200")
@@ -195,24 +215,51 @@ class TaskOrganizerApp(tk.Tk):
         set_alarm_button = Button(alarm_window, text="Set Alarm", command=lambda: self.set_alarm(task, alarm_window))
         set_alarm_button.pack(pady=10)
 
+
+    # def set_alarm(self, task, window):
+    #     """Set an alarm for a specific task."""
+    #     hour = int(self.hour_entry.get())
+    #     minute = int(self.minute_entry.get())
+
+    #     alarm_time = f"{hour:02}:{minute:02}"
+
+    #     # Save the alarm for the task
+    #     if task not in self.alarms:
+    #         self.alarms[task] = []
+
+    #     alarm_thread = threading.Thread(target=self.monitor_alarm, args=(task, alarm_time), daemon=True)
+    #     alarm_thread.start()
+
+    #     self.alarms[task].append(alarm_thread)
+
+    #     # Close the alarm setting window
+    #     window.destroy()
+
     def set_alarm(self, task, window):
         """Set an alarm for a specific task."""
-        hour = int(self.hour_entry.get())
-        minute = int(self.minute_entry.get())
+        try:
+            hour = int(self.hour_entry.get())
+            minute = int(self.minute_entry.get())
+            alarm_time = f"{hour:02}:{minute:02}"
+            print(f"Alarm set for {task} at {alarm_time}")  # Add this for debugging
 
-        alarm_time = f"{hour:02}:{minute:02}"
+            # Save the alarm for the task
+            if task not in self.alarms:
+                self.alarms[task] = []
 
-        # Save the alarm for the task
-        if task not in self.alarms:
-            self.alarms[task] = []
+            alarm_thread = threading.Thread(target=self.monitor_alarm, args=(task, alarm_time), daemon=True)
+            alarm_thread.start()
 
-        alarm_thread = threading.Thread(target=self.monitor_alarm, args=(task, alarm_time), daemon=True)
-        alarm_thread.start()
+            self.alarms[task].append(alarm_thread)
 
-        self.alarms[task].append(alarm_thread)
+            # Close the alarm setting window
+            window.destroy()
 
-        # Close the alarm setting window
-        window.destroy()
+        except ValueError:
+            print("Invalid time entered. Please ensure you input the correct hour and minute.")
+
+
+
 
     def monitor_alarm(self, task, alarm_time):
         """Monitor the alarm time and sound an alarm when time is matched."""
