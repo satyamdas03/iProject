@@ -1,17 +1,4 @@
 {
-    "tasks": {
-        "2024-03-12": [
-            ". project1: 180 minutes",
-            "DSA: 120 minutes",
-            ". CAT1 prep: 20 minutes"
-        ]
-    },
-    "documentation": {
-        "2024-23-12": [
-            "hello i am macintosh"
-        ],
-        "2024-03-12": [
-            "i am from earth"
-        ]
-    }
+    "tasks": {},
+    "documentation": {}
 }
