@@ -1,4 +1,7 @@
 import tkinter as tk
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 from tkinter import Text, Label, Button, Frame, Toplevel, Scrollbar, Entry, Canvas
 from PIL import Image, ImageTk
 import json
@@ -8,6 +11,41 @@ import re
 import webbrowser
 import os  # Add this line to import the os module
 from playsound import playsound  
+
+
+# Email credentials (replace with your actual credentials)
+# SMTP_SERVER = 'smtp.gmail.com'
+# SMTP_PORT = 587
+# EMAIL_ADDRESS = 'your_email@gmail.com'
+# EMAIL_PASSWORD = 'your_app_password'
+
+# def send_email_reminder(to_email, task):
+#     sender_email = "your_email@gmail.com"
+#     sender_password = "your_email_password"
+    
+#     subject = "Task Reminder"
+#     body = f"Reminder: {task}"
+
+#     # Create the email
+#     msg = MIMEMultipart()
+#     msg['From'] = sender_email
+#     msg['To'] = to_email
+#     msg['Subject'] = subject
+#     msg.attach(MIMEText(body, 'plain'))
+
+#     # Set up the server (in this case, using Gmail's SMTP server)
+#     server = smtplib.SMTP('smtp.gmail.com', 587)
+#     server.starttls()  # Start the encrypted connection
+#     server.login(sender_email, sender_password)
+
+#     # Send the email
+#     server.sendmail(sender_email, to_email, msg.as_string())
+#     server.quit()
+
+#     print(f"Sent reminder email to {to_email}")
+
+# # Example usage
+# send_email_reminder("recipient_email@example.com", "Finish the project report")
 
 def organize_tasks(corpus):
     tasks = []

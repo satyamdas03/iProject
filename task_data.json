@@ -1,11 +1,5 @@
 {
     "tasks": {
-        "2024-09-05": [
-            ". gym: 180 minutes",
-            "DSA: 120 minutes",
-            ". maggiMaking: 5 minutes",
-            ". washingBottle: 3 minutes"
-        ],
         "2024-09-06": [
             ". project1: 180 minutes",
             "DSA: 120 minutes",
@@ -38,6 +32,7 @@
             ". report writing start: 30 minutes",
             "toefl: 20 minutes",
             ". DSA: 180 minutes",
+            "toefl: 20 minutes",
             "toefl: 20 minutes"
         ],
         "2023-09-08": [
@@ -67,9 +62,6 @@
         "2024-09-09": [
             "hello i am macintosh",
             "hello i am iMac"
-        ],
-        "2023-09-08": [
-            "hello i am macintosh"
         ]
     }
 }
