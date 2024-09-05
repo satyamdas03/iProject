@@ -16,11 +16,25 @@
             ". printing the research paper: 60 minutes",
             ". reDSA: 60 minutes",
             ". report writing start: 30 minutes",
+            "toefl: 20 minutes",
+            ". printing the research paper: 60 minutes",
             "toefl: 20 minutes"
         ],
         "": [
             ". printing the research paper: 60 minutes",
             ". report writing start: 30 minutes",
+            "toefl: 20 minutes",
+            ". printing the research paper: 60 minutes",
+            ". report writing start: 30 minutes",
+            "toefl: 20 minutes",
+            ". printing the research paper: 60 minutes",
+            ". report writing start: 30 minutes",
+            "toefl: 20 minutes",
+            ". printing the research paper: 60 minutes",
+            "toefl: 20 minutes"
+        ],
+        "2023-09-08": [
+            ". printing the research paper: 60 minutes",
             "toefl: 20 minutes"
         ]
     },
@@ -30,6 +44,10 @@
             "i am from earth."
         ],
         "2024-09-09": [
+            "hello i am macintosh",
+            "hello i am iMac"
+        ],
+        "2023-09-08": [
             "hello i am macintosh"
         ]
     }
