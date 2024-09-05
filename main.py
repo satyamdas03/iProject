@@ -7,6 +7,7 @@ import time
 import re
 import webbrowser
 import os  # Add this line to import the os module
+from playsound import playsound  
 
 def organize_tasks(corpus):
     tasks = []
@@ -136,6 +137,7 @@ class TaskOrganizerApp(tk.Tk):
         # Data storage
         self.documentation = {}
         self.saved_tasks = {}
+        self.alarms = {}  # Dictionary to store alarm threads
 
         # Load previously saved data
         self.load_saved_data()
@@ -173,6 +175,82 @@ class TaskOrganizerApp(tk.Tk):
 
         # Save data to file
         self.save_to_file()
+
+    def set_alarm_dialog(self, task):
+        """Open a dialog to set alarm time for the task."""
+        alarm_window = Toplevel(self)
+        alarm_window.title(f"Set Alarm for {task}")
+        alarm_window.geometry("300x200")
+
+        Label(alarm_window, text=f"Set alarm for {task}").pack(pady=10)
+
+        self.hour_entry = Entry(alarm_window, width=5)
+        self.hour_entry.insert(0, "HH")
+        self.hour_entry.pack(pady=5)
+
+        self.minute_entry = Entry(alarm_window, width=5)
+        self.minute_entry.insert(0, "MM")
+        self.minute_entry.pack(pady=5)
+
+        set_alarm_button = Button(alarm_window, text="Set Alarm", command=lambda: self.set_alarm(task, alarm_window))
+        set_alarm_button.pack(pady=10)
+
+    def set_alarm(self, task, window):
+        """Set an alarm for a specific task."""
+        hour = int(self.hour_entry.get())
+        minute = int(self.minute_entry.get())
+
+        alarm_time = f"{hour:02}:{minute:02}"
+
+        # Save the alarm for the task
+        if task not in self.alarms:
+            self.alarms[task] = []
+
+        alarm_thread = threading.Thread(target=self.monitor_alarm, args=(task, alarm_time), daemon=True)
+        alarm_thread.start()
+
+        self.alarms[task].append(alarm_thread)
+
+        # Close the alarm setting window
+        window.destroy()
+
+    def monitor_alarm(self, task, alarm_time):
+        """Monitor the alarm time and sound an alarm when time is matched."""
+        while True:
+            current_time = time.strftime("%H:%M")
+
+            if current_time == alarm_time:
+                # Play the alarm sound and wait until turned off
+                self.sound_alarm(task)
+                break
+
+            time.sleep(10)  # Check every 10 seconds
+
+    def sound_alarm(self, task):
+        """Play an alarm sound until the user turns it off."""
+        alarm_window = Toplevel(self)
+        alarm_window.title(f"Alarm for {task}")
+        alarm_window.geometry("300x150")
+
+        Label(alarm_window, text=f"Alarm for task: {task}").pack(pady=20)
+
+        stop_button = Button(alarm_window, text="Stop Alarm", command=lambda: self.stop_alarm(alarm_window))
+        stop_button.pack(pady=10)
+
+        # Sound alarm until stopped
+        def play_alarm():
+            while True:
+                playsound("alarm_sound.mp3")  # Replace with your alarm sound path
+                time.sleep(5)  # Play every 5 seconds until stopped
+
+        self.alarm_thread = threading.Thread(target=play_alarm, daemon=True)
+        self.alarm_thread.start()
+
+    def stop_alarm(self, window):
+        """Stop the alarm and close the alarm window."""
+        self.alarm_thread = None  # Stop the alarm thread
+        window.destroy()
+
 
     def show_tasks(self, event):
         # Create a new window to display saved tasks
