@@ -38,6 +38,7 @@ def send_reminder(task):
 class TaskOrganizerApp(tk.Tk):
     def __init__(self):
         super().__init__()
+        self.alarm_stop_flag = threading.Event() 
         self.title("Task Organizer")
         self.geometry("600x1000")
 
@@ -224,31 +225,6 @@ class TaskOrganizerApp(tk.Tk):
         set_alarm_button = Button(alarm_window, text="Set Alarm", command=lambda: self.set_alarm_from_button(task, alarm_window))
         set_alarm_button.pack(pady=10)
 
-
-    # def set_alarm(self, task, window, *args):
-    #     """Set an alarm for a specific task."""
-    #     try:
-    #         hour = int(self.hour_entry.get())
-    #         minute = int(self.minute_entry.get())
-    #         alarm_time = f"{hour:02}:{minute:02}"
-    #         print(f"Alarm set for {task} at {alarm_time}")  # Add this for debugging
-
-    #         # Save the alarm for the task
-    #         if task not in self.alarms:
-    #             self.alarms[task] = []
-
-    #         alarm_thread = threading.Thread(target=self.monitor_alarm, args=(task, alarm_time), daemon=True)
-    #         alarm_thread.start()
-
-    #         self.alarms[task].append(alarm_thread)
-
-    #         # Close the alarm setting window
-    #         window.destroy()
-
-    #     except ValueError:
-    #         print("Invalid time entered. Please ensure you input the correct hour and minute.")
-
-
     def monitor_alarm(self, task, alarm_time):
         """Monitor the alarm time and sound an alarm when time is matched."""
         while True:
@@ -261,31 +237,59 @@ class TaskOrganizerApp(tk.Tk):
 
             time.sleep(10)  # Check every 10 seconds
 
+    # def sound_alarm(self, task):
+    #     """Play an alarm sound until the user turns it off."""
+    #     alarm_window = Toplevel(self)
+    #     alarm_window.title(f"Alarm for {task}")
+    #     alarm_window.geometry("300x150")
+
+    #     Label(alarm_window, text=f"Alarm for task: {task}").pack(pady=20)
+
+    #     stop_button = Button(alarm_window, text="Stop Alarm", command=lambda: self.stop_alarm(alarm_window))
+    #     stop_button.pack(pady=10)
+
+    #     # Sound alarm until stopped
+    #     def play_alarm():
+    #         while True:
+    #             playsound("alarm_sound.mp3")  # Replace with your alarm sound path
+    #             time.sleep(5)  # Play every 5 seconds until stopped
+
+    #     self.alarm_thread = threading.Thread(target=play_alarm, daemon=True)
+    #     self.alarm_thread.start()
+
     def sound_alarm(self, task):
         """Play an alarm sound until the user turns it off."""
-        alarm_window = Toplevel(self)
+        alarm_window = tk.Toplevel(self)
         alarm_window.title(f"Alarm for {task}")
         alarm_window.geometry("300x150")
 
-        Label(alarm_window, text=f"Alarm for task: {task}").pack(pady=20)
+        tk.Label(alarm_window, text=f"Alarm for task: {task}").pack(pady=20)
 
-        stop_button = Button(alarm_window, text="Stop Alarm", command=lambda: self.stop_alarm(alarm_window))
+        stop_button = tk.Button(alarm_window, text="Stop Alarm", command=lambda: self.stop_alarm(alarm_window))
         stop_button.pack(pady=10)
+
+        # Reset the stop flag in case it's set from a previous alarm
+        self.alarm_stop_flag.clear()
 
         # Sound alarm until stopped
         def play_alarm():
-            while True:
+            while not self.alarm_stop_flag.is_set():
                 playsound("alarm_sound.mp3")  # Replace with your alarm sound path
                 time.sleep(5)  # Play every 5 seconds until stopped
 
         self.alarm_thread = threading.Thread(target=play_alarm, daemon=True)
         self.alarm_thread.start()
 
+
+    # def stop_alarm(self, window):
+    #     """Stop the alarm and close the alarm window."""
+    #     self.alarm_thread = None  # Stop the alarm thread
+    #     window.destroy()
+
     def stop_alarm(self, window):
         """Stop the alarm and close the alarm window."""
-        self.alarm_thread = None  # Stop the alarm thread
+        self.alarm_stop_flag.set()  # Signal the alarm thread to stop
         window.destroy()
-
 
     def show_tasks(self, event):
         # Create a new window to display saved tasks
