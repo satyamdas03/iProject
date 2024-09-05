@@ -237,26 +237,6 @@ class TaskOrganizerApp(tk.Tk):
 
             time.sleep(10)  # Check every 10 seconds
 
-    # def sound_alarm(self, task):
-    #     """Play an alarm sound until the user turns it off."""
-    #     alarm_window = Toplevel(self)
-    #     alarm_window.title(f"Alarm for {task}")
-    #     alarm_window.geometry("300x150")
-
-    #     Label(alarm_window, text=f"Alarm for task: {task}").pack(pady=20)
-
-    #     stop_button = Button(alarm_window, text="Stop Alarm", command=lambda: self.stop_alarm(alarm_window))
-    #     stop_button.pack(pady=10)
-
-    #     # Sound alarm until stopped
-    #     def play_alarm():
-    #         while True:
-    #             playsound("alarm_sound.mp3")  # Replace with your alarm sound path
-    #             time.sleep(5)  # Play every 5 seconds until stopped
-
-    #     self.alarm_thread = threading.Thread(target=play_alarm, daemon=True)
-    #     self.alarm_thread.start()
-
     def sound_alarm(self, task):
         """Play an alarm sound until the user turns it off."""
         alarm_window = tk.Toplevel(self)
@@ -280,11 +260,6 @@ class TaskOrganizerApp(tk.Tk):
         self.alarm_thread = threading.Thread(target=play_alarm, daemon=True)
         self.alarm_thread.start()
 
-
-    # def stop_alarm(self, window):
-    #     """Stop the alarm and close the alarm window."""
-    #     self.alarm_thread = None  # Stop the alarm thread
-    #     window.destroy()
 
     def stop_alarm(self, window):
         """Stop the alarm and close the alarm window."""
