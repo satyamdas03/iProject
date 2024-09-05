@@ -48,6 +48,11 @@
             ". printing the research paper: 60 minutes",
             ". report writing start: 30 minutes",
             "toefl: 20 minutes"
+        ],
+        "2022-01-01": [
+            ". TOEFL: 240 minutes",
+            "DSA: 180 minutes",
+            ". maggi: 20 minutes"
         ]
     },
     "documentation": {
