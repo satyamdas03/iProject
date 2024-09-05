@@ -10,12 +10,27 @@
             ". project1: 180 minutes",
             "DSA: 120 minutes",
             ". CAT1 prep: 20 minutes"
+        ],
+        "2024-09-09": [
+            "toefl: 20 minutes",
+            ". printing the research paper: 60 minutes",
+            ". reDSA: 60 minutes",
+            ". report writing start: 30 minutes",
+            "toefl: 20 minutes"
+        ],
+        "": [
+            ". printing the research paper: 60 minutes",
+            ". report writing start: 30 minutes",
+            "toefl: 20 minutes"
         ]
     },
     "documentation": {
         "2024-09-05": [
             "hello i am macintosh.",
             "i am from earth."
+        ],
+        "2024-09-09": [
+            "hello i am macintosh"
         ]
     }
 }

@@ -259,8 +259,6 @@ class TaskOrganizerApp(tk.Tk):
             print("Invalid time entered. Please ensure you input the correct hour and minute.")
 
 
-
-
     def monitor_alarm(self, task, alarm_time):
         """Monitor the alarm time and sound an alarm when time is matched."""
         while True:
