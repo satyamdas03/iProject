@@ -1,3 +1,4 @@
 1) alarm should stop when the stop alarm button is clicked
 2) multiple alarms functionality not working
 3) reminder functionality yet to be implemented
+4) make the music player.. connect spotify to it.

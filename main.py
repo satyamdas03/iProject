@@ -11,9 +11,12 @@ import time
 import re
 import webbrowser
 import os  # Add this line to import the os module
-from playsound import playsound  
+from playsound import playsound 
+from dotenv import load_dotenv
 
-openai.api_key = 'your-openai-api-key'
+load_dotenv()
+
+openai.api_key = os.getenv('OPENAI_API_KEY')
 
 
 def organize_tasks(corpus):
@@ -459,54 +462,31 @@ class TaskOrganizerApp(tk.Tk):
         self.stepwise_instructions_text = Text(project_window, height=8, width=50)
         self.stepwise_instructions_text.pack(pady=5)
 
-    def open_project_gui(self, event):
-        # Create a new window for the project section
-        project_window = Toplevel(self)
-        project_window.title("Project Idea to Steps")
-        project_window.geometry("500x400")
-
-        # Project Name Entry
-        Label(project_window, text="Enter Project Name:", font=("Arial", 12)).pack(pady=10)
-        project_name_entry = Entry(project_window, width=50)
-        project_name_entry.pack(pady=5)
-
-        # Project Idea Entry
-        Label(project_window, text="Enter the Idea of the Project:", font=("Arial", 12)).pack(pady=10)
-        project_idea_text = Text(project_window, height=5, width=50)
-        project_idea_text.pack(pady=5)
-
-        # Stepify Button
-        stepify_button = Button(project_window, text="Stepify", command=lambda: self.generate_steps(project_name_entry.get(), project_idea_text.get("1.0", "end-1c"), project_window))
-        stepify_button.pack(pady=10)
-
-        # Stepwise Instructions Label
-        Label(project_window, text="Stepwise Instructions:", font=("Arial", 12)).pack(pady=10)
-
-        # Text box to show AI-generated instructions
-        self.stepwise_instructions_text = Text(project_window, height=8, width=50)
-        self.stepwise_instructions_text.pack(pady=5)
-
     def generate_steps(self, project_name, project_idea, window):
         if not project_name or not project_idea:
             messagebox.showerror("Error", "Please fill out both the project name and project idea.")
             return
-        
-        # Generate stepwise instructions using OpenAI's GPT
-        response = openai.Completion.create(
-            model="text-davinci-003",
-            prompt=f"Generate stepwise instructions to turn the following project idea into a reality: {project_idea}",
-            temperature=0.7,
-            max_tokens=200,
-            top_p=1,
-            frequency_penalty=0,
-            presence_penalty=0
-        )
 
-        steps = response.choices[0].text.strip()
+        try:
+            # Generate stepwise instructions using OpenAI's GPT
+            response = openai.Completion.create(
+                model="text-davinci-003",
+                prompt=f"Generate stepwise instructions to turn the following project idea into a reality: {project_idea}",
+                temperature=0.7,
+                max_tokens=200,
+                top_p=1,
+                frequency_penalty=0,
+                presence_penalty=0
+            )
 
-        # Insert AI-generated steps into the text box
-        self.stepwise_instructions_text.delete("1.0", "end")
-        self.stepwise_instructions_text.insert("end", steps)
+            steps = response.choices[0].text.strip()
+
+            # Insert AI-generated steps into the text box
+            self.stepwise_instructions_text.delete("1.0", "end")
+            self.stepwise_instructions_text.insert("end", steps)
+
+        except Exception as e:
+            messagebox.showerror("Error", f"An error occurred while generating steps: {str(e)}")
 
 
 if __name__ == "__main__":
