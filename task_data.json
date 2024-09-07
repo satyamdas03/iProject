@@ -33,7 +33,9 @@
             "toefl: 20 minutes",
             ". DSA: 180 minutes",
             "toefl: 20 minutes",
-            "toefl: 20 minutes"
+            "toefl: 20 minutes",
+            ". xyz: 3 minutes",
+            "abc: 2 minutes"
         ],
         "2023-09-08": [
             ". printing the research paper: 60 minutes",
@@ -52,6 +54,10 @@
         "2020-09-01": [
             ". printing the research paper: 60 minutes",
             "toefl: 20 minutes"
+        ],
+        "2024-09-07": [
+            "writing research paper: 120 minutes",
+            ". gym: 120 minutes"
         ]
     },
     "documentation": {
@@ -62,6 +68,9 @@
         "2024-09-09": [
             "hello i am macintosh",
             "hello i am iMac"
+        ],
+        "2024-09-07": [
+            "hello i am imac"
         ]
     }
 }
