@@ -470,7 +470,7 @@ class TaskOrganizerApp(tk.Tk):
         try:
             # Generate stepwise instructions using OpenAI's GPT
             response = openai.Completion.create(
-                model="text-davinci-003",
+                model="gpt-3.5-turbo",
                 prompt=f"Generate stepwise instructions to turn the following project idea into a reality: {project_idea}",
                 temperature=0.7,
                 max_tokens=200,
