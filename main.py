@@ -462,16 +462,20 @@ class TaskOrganizerApp(tk.Tk):
         self.stepwise_instructions_text = Text(project_window, height=8, width=50)
         self.stepwise_instructions_text.pack(pady=5)
 
+
     def generate_steps(self, project_name, project_idea, window):
         if not project_name or not project_idea:
             messagebox.showerror("Error", "Please fill out both the project name and project idea.")
             return
 
         try:
-            # Generate stepwise instructions using OpenAI's GPT
-            response = openai.Completion.create(
-                model="gpt-3.5-turbo",
-                prompt=f"Generate stepwise instructions to turn the following project idea into a reality: {project_idea}",
+            # Generate stepwise instructions using OpenAI's Chat Completion API
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",  # Or gpt-4 if you're using that model
+                messages=[
+                    {"role": "system", "content": "You are an assistant that helps people break down project ideas into actionable steps."},
+                    {"role": "user", "content": f"Generate stepwise instructions to turn the following project idea into a reality: {project_idea}"}
+                ],
                 temperature=0.7,
                 max_tokens=200,
                 top_p=1,
@@ -479,7 +483,8 @@ class TaskOrganizerApp(tk.Tk):
                 presence_penalty=0
             )
 
-            steps = response.choices[0].text.strip()
+            # Extract the generated steps
+            steps = response.choices[0].message['content'].strip()
 
             # Insert AI-generated steps into the text box
             self.stepwise_instructions_text.delete("1.0", "end")
