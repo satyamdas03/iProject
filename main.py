@@ -439,7 +439,7 @@ class TaskOrganizerApp(tk.Tk):
         # Create a new window for the project section
         project_window = Toplevel(self)
         project_window.title("Project Idea to Steps")
-        project_window.geometry("500x400")
+        project_window.geometry("600x600")
 
         # Project Name Entry
         Label(project_window, text="Enter Project Name:", font=("Arial", 12)).pack(pady=10)
@@ -459,7 +459,7 @@ class TaskOrganizerApp(tk.Tk):
         Label(project_window, text="Stepwise Instructions:", font=("Arial", 12)).pack(pady=10)
 
         # Text box to show AI-generated instructions
-        self.stepwise_instructions_text = Text(project_window, height=8, width=50)
+        self.stepwise_instructions_text = Text(project_window, height=18, width=50)
         self.stepwise_instructions_text.pack(pady=5)
 
 
