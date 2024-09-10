@@ -459,7 +459,7 @@ class TaskOrganizerApp(tk.Tk):
         Label(project_window, text="Stepwise Instructions:", font=("Arial", 12)).pack(pady=10)
 
         # Text box to show AI-generated instructions
-        self.stepwise_instructions_text = Text(project_window, height=18, width=50)
+        self.stepwise_instructions_text = Text(project_window, height=25, width=65)
         self.stepwise_instructions_text.pack(pady=5)
 
 
