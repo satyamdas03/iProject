@@ -494,6 +494,9 @@ class TaskOrganizerApp(tk.Tk):
             messagebox.showerror("Error", f"An error occurred while generating steps: {str(e)}")
 
 
+
+
+
 if __name__ == "__main__":
     app = TaskOrganizerApp()
     app.mainloop()
