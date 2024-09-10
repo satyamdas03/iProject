@@ -473,11 +473,27 @@ class TaskOrganizerApp(tk.Tk):
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",  # Or gpt-4 if you're using that model
                 messages=[
-                    {"role": "system", "content": "You are an assistant that helps people break down project ideas into actionable steps."},
-                    {"role": "user", "content": f"Generate stepwise instructions to turn the following project idea into a reality: {project_idea}"}
+                    {
+                        "role": "system",
+                        "content": (
+                            "You are an assistant that helps people break down complex project ideas "
+                            "into detailed, actionable steps. For each project, provide specific steps with "
+                            "clear instructions, timelines, resources needed, tools to be used, potential challenges, "
+                            "and how to overcome them. Make sure the steps are organized into phases like "
+                            "'Planning', 'Execution', and 'Finalization'."
+                        )
+                    },
+                    {
+                        "role": "user",
+                        "content": (
+                            f"Break down the following project idea into detailed stepwise instructions, "
+                            f"including sub-tasks, required tools, resources, timelines, potential challenges, "
+                            f"and solutions. Here's the project idea: {project_idea}"
+                        )
+                    }
                 ],
                 temperature=0.7,
-                max_tokens=200,
+                max_tokens=500,  # Increase token limit for more detailed responses
                 top_p=1,
                 frequency_penalty=0,
                 presence_penalty=0
@@ -492,9 +508,6 @@ class TaskOrganizerApp(tk.Tk):
 
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred while generating steps: {str(e)}")
-
-
-
 
 
 if __name__ == "__main__":
