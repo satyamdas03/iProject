@@ -4,3 +4,7 @@ The Task Organizer Application is a GUI-based tool developed using the tkinter l
 
 The application emphasizes time management, productivity tracking, and personalized task organization, offering features like task sorting by duration, background alarms, and persistent data storage.
 
+## Features
+
+1. Organize Tasks
+   - Input tasks with their expected duration (minutes or hours).
