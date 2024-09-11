@@ -58,6 +58,11 @@
         "2024-09-07": [
             "writing research paper: 120 minutes",
             ". gym: 120 minutes"
+        ],
+        "2024-09-11": [
+            ". lunch: 60 minutes",
+            ". washingBottle: 30 minutes",
+            "breakfast: 20 minutes"
         ]
     },
     "documentation": {
@@ -71,6 +76,9 @@
         ],
         "2024-09-07": [
             "hello i am imac"
+        ],
+        "2024-09-11": [
+            "hello i am macintosh."
         ]
     }
 }
