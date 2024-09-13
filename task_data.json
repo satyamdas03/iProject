@@ -63,6 +63,12 @@
             ". lunch: 60 minutes",
             ". washingBottle: 30 minutes",
             "breakfast: 20 minutes"
+        ],
+        "2024-09-12": [
+            "DSA: 180 minutes"
+        ],
+        "2024-09-13": [
+            "cybersecquiz: 20 minutes"
         ]
     },
     "documentation": {
@@ -79,6 +85,12 @@
         ],
         "2024-09-11": [
             "hello i am macintosh."
+        ],
+        "2024-09-12": [
+            "hello i am macintosh"
+        ],
+        "2024-09-13": [
+            "hello i am imac"
         ]
     }
 }
